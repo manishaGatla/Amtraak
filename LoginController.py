@@ -19,17 +19,10 @@ def authenticate_user(username, password, isAdmin):
 
     return None
 def Register(data):
-    if db is not None:
-        admin_collection = db["Admin"]
-        passenger_collection = db["Passenger"]
-        if(data.get('isAdmin')):
-            data_insert = admin_collection.insert_one(data.get('name'),data.get('email'),data.get('phoneNumber'),data.get('password'),data.get('Password'),data.get('dob'),data.get('gender'))
-            
-            if(data_insert):
-                return "success"
-        else:
-            data_insert = passenger_collection.insert_one(data.get('name'),data.get('username'),data.get('password'))
-            if(data_insert):
-                return "success"
+    customers_collection  = db["Customers"]
+
+    data_insert = customers_collection.insert_one(data.get('name'),data.get('email'),data.get('phoneNumber'),data.get('password'),data.get('Password'),data.get('dob'),data.get('gender'))
+    if(data_insert):
+        return "success"
     return None
 

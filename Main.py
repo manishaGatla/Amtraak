@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 import LoginController
+from MongoConnectionHelper import connect_to_mongodb
 
 app = Flask(__name__)
 
@@ -20,13 +21,13 @@ def login():
 def Register():
     data = request.get_json()
     print(data)
-    name = data.get('name')
-    email = data.get('email')
-    password = data.get('password')
-    phoneNumber = data.get('phoneNumber')
-    dob = data.get('dob')
-    gender = data.get('gender')
-    
+    # name = data.get('name')
+    # email = data.get('email')
+    # password = data.get('password')
+    # phoneNumber = data.get('phoneNumber')
+    # dob = data.get('dob')
+    # gender = data.get('gender')
+
     
 
     register = LoginController.Register(data)
