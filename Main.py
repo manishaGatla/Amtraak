@@ -23,8 +23,6 @@ def login():
         return jsonify({"success": False, "message": "Invalid username or password"})
 @app.post('/register')
 def Register():
-
-    print("...................................................................")
     print("request")
     data = request.get_json()
     print(data)
