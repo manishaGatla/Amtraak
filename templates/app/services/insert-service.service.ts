@@ -1,12 +1,14 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InsertServiceService {
 
-  constructor() { }
-
+  constructor(private httpclient : HttpClient) { }
+  baseUrl = "https://localhost:5000/";
   user : any ={
     name : null,
     email : null,
@@ -16,4 +18,21 @@ export class InsertServiceService {
     gender: null
 
   };
+
+
+  registerUser(reqBody: any): Observable<any>{
+    return this.httpclient.post(this.baseUrl + "register", reqBody);
+  }
+
+  addTrain(reqBody: any): Observable<any>{
+    return this.httpclient.post(this.baseUrl + "register", reqBody);
+  }
+
+  addStation(reqBody: any): Observable<any>{
+    return this.httpclient.post(this.baseUrl + "register", reqBody);
+  }
+
+  addSchedule(reqBody: any): Observable<any>{
+    return this.httpclient.post(this.baseUrl + "register", reqBody);
+  }
 }
