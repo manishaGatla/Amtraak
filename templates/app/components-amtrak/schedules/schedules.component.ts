@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { GetServiceService } from 'templates/app/services/get-service.service';
+import { InsertServiceService } from 'templates/app/services/insert-service.service';
+import { UpdateServiceService } from 'templates/app/services/update-service.service';
 
 @Component({
   selector: 'app-schedules',
@@ -52,6 +56,8 @@ export class SchedulesComponent {
 
   daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+
+  constructor(private router: Router,public getService: GetServiceService, public insertService: InsertServiceService , public updateService: UpdateServiceService) {}
   addNewSchedule() {
     this.showNewScheduleForm = true;
   }

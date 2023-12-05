@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { GetServiceService } from 'templates/app/services/get-service.service';
+import { InsertServiceService } from 'templates/app/services/insert-service.service';
+import { UpdateServiceService } from 'templates/app/services/update-service.service';
 
 @Component({
   selector: 'app-stations-amtraak',
@@ -15,7 +19,7 @@ export class StationsAmtraakComponent {
   stationLocation: any = null;
   showStationForm: boolean = false;
 
-  // Functions to toggle form visibility
+  constructor(private router: Router,public getService: GetServiceService, public insertService: InsertServiceService , public updateService: UpdateServiceService) {}
   showAddStationForm() {
     this.showStationForm = true;
   }
