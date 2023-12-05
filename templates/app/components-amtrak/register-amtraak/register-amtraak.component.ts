@@ -56,6 +56,18 @@ isValidEmail(email: string): boolean {
 }
 
 registercustomer(){
-
+  this.insertService.registerUser(this.customer).subscribe((res)=>{
+    this.router.navigateByUrl('/login');
+    this.customer = {
+      name : null,
+      email : null,
+      password: null,
+      phoneNumber: null,
+      dob: null,
+      gender: null,
+      
+  
+    };
+  })
 }
 }
