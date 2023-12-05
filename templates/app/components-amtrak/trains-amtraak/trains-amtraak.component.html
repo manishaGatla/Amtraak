@@ -1,0 +1,77 @@
+<section class="admin-page">
+    
+    <div class="admin-actions margins" *ngIf="!showTrainForm">
+      <button (click)="showAddTrainForm()">Add Train</button>
+    </div>
+
+    
+    <div *ngIf="showTrainForm">
+        <h3>Add Train</h3>
+        <div class="margins">
+          <label for="trainName">Train Name:</label>
+          <input type="text" id="trainName" name="trainName" [(ngModel)]="trainName">
+        </div>
+        <div class="margins">
+          <label for="startStation">Start Station:</label>
+          <select id="startStation" name="startStation" [(ngModel)]="startStation">
+            <option *ngFor="let station of stations" [value]="station.name">{{ station.name }}</option>
+          </select>
+        </div>
+        <div class="margins">
+          <label for="endStation">End Station:</label>
+          <select id="endStation" name="endStation" [(ngModel)]="endStation">
+            <option *ngFor="let station of stations" [value]="station.name">{{ station.name }}</option>
+          </select>
+        </div>
+        
+    
+          <button type="submit" class="margins">Add Train</button>
+          <button type="submit" class="margins" (click)="OnBackClicked()">Back</button>
+      </div>
+    
+    
+      <div *ngIf="!showTrainForm">
+        <table>
+          <thead>
+            <tr>
+              <th>Train Name</th>
+              <th>Start Station</th>
+              <th>Destination Station</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let train of trains; let i = index">
+              <tr *ngIf="!train.editable; else editRow">
+                <td>{{ train.name }}</td>
+                <td>{{ train.startStation }}</td>
+                <td>{{ train.destinationStation }}</td>
+                <td>
+                  <button (click)="toggleEdit(i)">Edit</button>
+                </td>
+              </tr>
+              <ng-template #editRow>
+                <tr>
+                  <td><input type="text" [(ngModel)]="trains[i].name" /></td>
+                  <td>
+                    <select [(ngModel)]="trains[i].startStation">
+                      <option *ngFor="let station of stations" [value]="station.name">{{ station.name }}</option>
+                    </select>
+                  </td>
+                  <td>
+                    <select [(ngModel)]="trains[i].destinationStation">
+                      <option *ngFor="let station of stations" [value]="station.name">{{ station.name }}</option>
+                    </select>
+                  </td>
+                  <td>
+                    <button (click)="saveEdit(i)">Save</button>
+                    <button (click)="toggleEdit(i)">Cancel</button>
+                  </td>
+                </tr>
+              </ng-template>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+  </section>
+  

@@ -1,0 +1,65 @@
+<section class="schedules-page">
+    <h2>Schedules</h2>
+  
+    <!-- Button to add new schedule -->
+    <div *ngIf="!showNewScheduleForm">
+      <button (click)="addNewSchedule()">Add New Schedule</button>
+    </div>
+  
+    <div *ngIf="showNewScheduleForm">
+    <div>
+      <h3>Add New Schedule</h3>
+      <div >
+        
+        <div class="margins">
+            <label for="trainName">Train Name:</label>
+        <select id="trainName" name="trainName" [(ngModel)]="selectedTrain">
+          <option *ngFor="let train of trains" [value]="train.name">{{ train.name }}</option>
+        </select>
+        </div>
+  
+        <div class="margins">
+        <label for="dayOfWeek">Day of Week:</label>
+        <select id="dayOfWeek" name="dayOfWeek" [(ngModel)]="selectedDay">
+          <option *ngFor="let day of daysOfWeek" [value]="day">{{ day }}</option>
+        </select></div>
+  
+        <div class="margins">
+        <label for="startTime">Start Time:</label>
+        <input type="time" id="startTime" name="startTime" [(ngModel)]="startTime"></div>
+  
+        <div class="margins"></div> <label for="endTime">End Time:</label>
+        <input type="time" id="endTime" name="endTime" [(ngModel)]="endTime"></div>
+  
+        <div class="margins">
+        <label for="startStation">Start Station:</label>
+        <input type="text" id="startStation" name="startStation" [value]="getStartStation()" disabled></div>
+  
+        <div class="margins">
+        <label for="endStation">End Station:</label>
+        <input type="text" id="endStation" name="endStation" [value]="getEndStation()" disabled>
+        </div>
+    </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Select</th>
+              <th>Sequence</th>
+              <th>Station Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let station of stations">
+              <td><input type="checkbox"></td>
+              <td><input type="text" [(ngModel)]="station.sequence"></td>
+              <td>{{ station.name }}</td>
+            </tr>
+          </tbody>
+        </table>
+  
+        <button type="submit">Save Schedule</button>
+        <button type="submit" (click)="OnBackClicked()">Back</button>
+    </div>
+  </section>
+  
