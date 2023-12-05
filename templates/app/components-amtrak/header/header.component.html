@@ -1,20 +1,17 @@
-<section class="wd-100">
-    <section class="header">
-        <div class="container ">
-            <div class="routes-grid ">
-              <div class="routes-grid "><button routerLink="/register">Register</button></div>
-              <div class="routes-grid "><button routerLink="/login">Login</button></div>
-              <div class="routes-grid "><button routerLink="/booking">Booking</button></div>
-              <div class="routes-grid "><button routerLink="/schedules">Schedules</button></div>
-              <div class="routes-grid "><button routerLink="/trains">Trains</button></div>
-              <div class="routes-grid "><button routerLink="/stations">Stations</button></div>
-            </div>
-        </div>
-    </section>
-    <section class="details margins">
-        <router-outlet></router-outlet>
-    </section>
-</section>
+<nav class="c-r">
+    <ul class="margins">
+        <li>  <a class="margins" routerLink="/register" routerLinkActive="active" >Register</a></li>
+        <li>              <a class="margins" routerLink="/login" routerLinkActive="active">Login</a></li>
+        <li>              <a class="margins" routerLink="/booking" routerLinkActive="active">Booking</a></li>
+        <li>              <a class="margins" routerLink="/schedules" routerLinkActive="active">Schedules</a></li>
+        <li>              <a class="margins" routerLink="/trains" routerLinkActive="active">Trains</a></li>
+        <li>              <a class="margins" routerLink="/stations" routerLinkActive="active">Stations</a></li>
+    </ul>
+  </nav>
+  <router-outlet></router-outlet>
+
+
+
 
 
 

@@ -2,27 +2,55 @@
     display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      height: 100vh;
       padding-left: 20px;
       flex-wrap: nowrap;
       align-content: center;
       align-items: flex-start;
   }
-  
-  .routes-list {
-    display: flex;
-    flex-direction: column; /* Stack buttons vertically */
-    gap: 10px; /* Adjust spacing between buttons */
+
+  /* Style navigation */
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+ // margin-right: 10px;
+}
+
+nav ul li a {
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+  .c-r{
+    background-color: #746d6d;
   }
+  
+  nav ul li a:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Style active link */
+  .active {
+    background-color: #0056b3;
+  }
+  
   
   button {
     width: 160px;
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 padding: 10px;
-    font-size: 18px;
-    background-color: #de2d29;
-    color: white;
+    font-size: 15px;
+    background-color: white;
+    color: black;
+    border-radius: 15px;
     border: none;
     cursor: pointer;
   }
@@ -31,12 +59,13 @@ padding: 10px;
     background-color: #0056b3;
   }
   
- .wd-100{
-    width: 100%;
-    display: flex;
- }
 
- .details{
-    width: 80%;
- }
+ .active {
+  background-color: #0056b3;
+  color: black;
+}
 
+img{
+  height: 120px;
+  margin-top: 60px ;
+}

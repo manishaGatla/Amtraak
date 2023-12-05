@@ -8,14 +8,10 @@
   }
   
 .margins{
-    margin: 20px;
+    margin: 10px;
 }
 
-.header{
-    width: 15%;
-    height: auto;
-background: black;
-}
+
 
 
 label {
@@ -61,10 +57,11 @@ label {
     border: 1px solid #ccc;
     padding: 8px;
     text-align: left;
+    background-color: #91b9e0;
   }
   
   table th {
-    background-color: #ad8585;
+    background-color: #d06e6e;
   }
   
   input[type="text"] {
@@ -79,5 +76,12 @@ label {
   input[type="text"]:focus {
     outline: none;
     border-color: #007bff;
+  }
+
+  body{
+    background-color: #e3f2fdb0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url('https://kessiworld.com/wp-content/uploads/2023/04/Kessiworld-Seattle-Vancouver-Train-17.png');
   }
   

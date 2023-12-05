@@ -1,1 +1,30 @@
-<p>bookings-amtraak works!</p>
+
+<section class="search-trains">
+    <h2>Search Trains</h2>
+    <section >
+      <div class="margins"><input type="text" placeholder="Enter Train Name" [(ngModel)]="trainName"></div>
+      <div class="margins"><select [(ngModel)]="fromStation">
+        <option value="">Select From Station</option>
+        <option *ngFor="let station of stations" [value]="station.id">{{ station.name }}</option>
+      </select></div>
+      <div class="margins"><select [(ngModel)]="toStation">
+        <option value="">Select To Station</option>
+        <option *ngFor="let station of stations" [value]="station.id">{{ station.name }}</option>
+      </select></div>
+      <button type="submit" (click)="searchTrains()">Search</button>
+    </section>
+  
+    <div *ngIf="searchResults.length > 0">
+      <h3>Search Results:</h3>
+      <ul>
+        <li *ngFor="let train of searchResults">
+          Train Name: {{ train.name }} - From: {{ train.fromStation }} - To: {{ train.toStation }}
+        </li>
+      </ul>
+    </div>
+  
+    <div *ngIf="searchResults.length === 0 && searchPerformed">
+      <p>No trains found matching the criteria.</p>
+    </div>
+  </section>
+  

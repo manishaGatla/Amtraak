@@ -61,5 +61,46 @@
         <button type="submit">Save Schedule</button>
         <button type="submit" (click)="OnBackClicked()">Back</button>
     </div>
-  </section>
+</section>
+
+<section class="schedules-page" *ngIf="!showNewScheduleForm">
+  <div *ngIf="existingSchedules.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>Train Name</th>
+          <th>Day of Week</th>
+          <th>Start Time</th>
+          <th>End Time</th>
+          <th>Stations</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let schedule of existingSchedules">
+          <td>{{ schedule.trainName }}</td>
+          <td>{{ schedule.dayOfWeek }}</td>
+          <td>{{ schedule.startTime }}</td>
+          <td>{{ schedule.endTime }}</td>
+          <td>
+            <ul>
+              <li *ngFor="let station of schedule.stations; let i = index">
+                {{ station.name }} - Start Time: {{ station.startTime }} - Sequence: {{ station.sequence }}
+              </li>
+            </ul>
+          </td>
+          <td>
+            <button (click)="editSchedule(schedule)">Edit</button>
+            <button (click)="toggleStatus(schedule)">Toggle Status</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="existingSchedules.length === 0">
+    <p>No existing schedules.</p>
+  </div>
+</section>
+
+
   
