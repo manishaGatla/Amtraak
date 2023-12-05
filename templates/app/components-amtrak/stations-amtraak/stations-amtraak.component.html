@@ -1,0 +1,57 @@
+<section class="admin-page" *ngIf="!showStationForm">
+    
+    <div class="admin-actions margins">
+      <button (click)="showAddStationForm()">Add Station</button>
+    </div>
+</section>
+
+    
+<div *ngIf="showStationForm">
+    <h3>Add Station</h3>
+    <div >
+      <div>
+        <label for="stationName">Station Name:</label>
+        <input type="text" id="stationName" name="stationName" [(ngModel)]="stationName">
+      </div>
+      <div>
+        <label for="stationLocation">Location:</label>
+        <input type="text" id="stationLocation" name="stationLocation" [(ngModel)]="stationLocation">
+
+      </div>
+     
+      
+      <div><button type="submit">Add Station</button>
+        <button type="submit" (click)="OnBackClicked()">Back</button></div>
+    </div>
+  </div>
+
+  <section *ngIf="!showStationForm">
+    <table>
+        <thead>
+          <tr>
+            <th>Station Name</th>
+            <th>Station Location</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let station of stations; let i = index">
+            <td>
+              <input type="text" [(ngModel)]="stations[i].name" [disabled]="!station.editable">
+            </td>
+            <td>
+              <input type="text" [(ngModel)]="stations[i].location" [disabled]="!station.editable">
+            </td>
+            <td>
+              <button (click)="toggleEdit(station)">
+                {{ station.editable ? 'Save' : 'Edit' }}
+              </button>
+              <button class="margins"*ngIf="station.editable" (click)="toggleEdit(station)">
+                  Back
+                </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </section>
+

@@ -1,0 +1,42 @@
+.container {
+    display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      height: 100vh;
+      padding-left: 20px;
+      flex-wrap: nowrap;
+      align-content: center;
+      align-items: flex-start;
+  }
+  
+  .routes-list {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 10px; /* Adjust spacing between buttons */
+  }
+  
+  button {
+    width: 160px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+padding: 10px;
+    font-size: 18px;
+    background-color: #de2d29;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+ .wd-100{
+    width: 100%;
+    display: flex;
+ }
+
+ .details{
+    width: 80%;
+ }
+

@@ -1,1 +1,83 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~@fortawesome/fontawesome-free/css/all.css';
+
+
+.password-toggle-icon {
+    font-family: "Font Awesome 5 Free";
+    cursor: pointer;
+    margin-left: -27px;
+  }
+  
+.margins{
+    margin: 20px;
+}
+
+.header{
+    width: 15%;
+    height: auto;
+background: black;
+}
+
+
+label {
+    width: 20%; /* Set label width */
+    display: inline-block; /* Display labels in block */
+    text-align: right; /* Align labels to the right */
+    margin-right: 10px; /* Add some space between label and input */
+    font-weight: bold;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+    
+  
+  
+
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="date"],
+  input[type="time"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 20%;
+  }
+
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  table th, table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  table th {
+    background-color: #ad8585;
+  }
+  
+  input[type="text"] {
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease-in-out;
+  }
+  
+  input[type="text"]:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  
