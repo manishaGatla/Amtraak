@@ -27,4 +27,13 @@ export class LoginAmtraakComponent implements OnInit {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
 
+
+  getUserDetails(){
+    this.getService.getUser(this.user.email, this.user.password).subscribe((res)=>{
+      if(res){
+        this.getService.user = res;
+        this.getService.isLoginSuccessful = true;
+      }
+    })
+  }
 }

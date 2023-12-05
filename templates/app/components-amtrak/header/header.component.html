@@ -1,11 +1,12 @@
 <nav class="c-r">
     <ul class="margins">
-        <li>  <a class="margins" routerLink="/register" routerLinkActive="active" >Register</a></li>
-        <li>              <a class="margins" routerLink="/login" routerLinkActive="active">Login</a></li>
-        <li>              <a class="margins" routerLink="/booking" routerLinkActive="active">Booking</a></li>
-        <li>              <a class="margins" routerLink="/schedules" routerLinkActive="active">Schedules</a></li>
-        <li>              <a class="margins" routerLink="/trains" routerLinkActive="active">Trains</a></li>
-        <li>              <a class="margins" routerLink="/stations" routerLinkActive="active">Stations</a></li>
+        <li> <a class="margins" *ngIf="!getService.isLoginSuccessful" routerLink="/register" routerLinkActive="active" >Register</a></li>
+        <li> <a class="margins" *ngIf="!getService.isLoginSuccessful" routerLink="/login" routerLinkActive="active">Login</a></li>
+        <li> <a class="margins" *ngIf="getService.isLoginSuccessful" routerLink="/booking" routerLinkActive="active">Booking</a></li>
+        <li> <a class="margins" *ngIf="getService.isLoginSuccessful" routerLink="/schedules" routerLinkActive="active">Schedules</a></li>
+        <li> <a class="margins" *ngIf="getService.isLoginSuccessful" routerLink="/trains" routerLinkActive="active">Trains</a></li>
+        <li> <a class="margins" *ngIf="getService.isLoginSuccessful" routerLink="/stations" routerLinkActive="active">Stations</a></li>
+        <li> <a class="margins" *ngIf="getService.isLoginSuccessful" routerLink="/stations" routerLinkActive="active" (click) ="logOut()">Log Out</a></li>
     </ul>
   </nav>
   <router-outlet></router-outlet>

@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { StationsAmtraakComponent } from './components-amtrak/stations-amtraak/stations-amtraak.component';
 import { SchedulesComponent } from './components-amtrak/schedules/schedules.component';
 
+import { HttpClientModule } from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +28,8 @@ import { SchedulesComponent } from './components-amtrak/schedules/schedules.comp
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
