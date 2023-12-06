@@ -10,8 +10,9 @@ def getAllUsersByEmail(email):
     
     if(data is None):
         data = db["Admins"].find_one({"email":email})
-        data["isAdmin"] = 1
-        data["isCustomer"]=0
+        if(data is not None):
+            data["isAdmin"] = 1
+            data["isCustomer"]=0
     else:
         data["isAdmin"] = 0
         data["isCustomer"]=1
