@@ -6,6 +6,7 @@ import LoginController
 import StationsController
 import TrainsController
 from MongoConnectionHelper import connect_to_mongodb
+import ScheduleController
 from flask_cors import CORS
 
 # app = FastAPI()
@@ -81,7 +82,7 @@ def SearchTrains():
 @app.post('/addSchedule')
 def addSchedule():
     data = request.get_json()   
-    trains = TrainsController.AddSchedule(data)
+    trains = ScheduleController.AddSchedule(data)
     return jsonify({"Success": True}) if trains else jsonify({"Success": False})
 
 
