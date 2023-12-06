@@ -85,6 +85,12 @@ def addSchedule():
     trains = ScheduleController.AddSchedule(data)
     return jsonify({"Success": True}) if trains else jsonify({"Success": False})
 
+@app.get('/getAllSchedules')
+def getAllSchedules():
+       
+    schedules = ScheduleController.GetAllSchedules()
+    return schedules if not None else jsonify({"message":"No Schedule Found"})
+
 
 @app.route('/')
 def root():

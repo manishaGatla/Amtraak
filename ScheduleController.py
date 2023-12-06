@@ -12,3 +12,9 @@ def AddSchedule(data):
     if(data_insert):
         return "success"
     return "failure"
+
+def GetAllSchedules():
+    data = list(db["Schedule"].find({}))
+    for d in data:
+        d["_id"]=str(d["_id"])
+    return data
