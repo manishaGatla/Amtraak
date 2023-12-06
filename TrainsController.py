@@ -13,17 +13,16 @@ def getAllTrains():
         for d in data:
             d["_id"]=str(d["_id"])
     return data if data is not None else jsonify({"Success":False,"message":"No Trains Found"})
-# def AddStations(data):
-#     data_insert = db["Stations"].insert_one(data)
-#     if(data_insert):
-#         return "success"
-#     return "failure"
-# def UpdateStations(data):
-    
-#     data_update = db["Stations"].update_one({"_id":ObjectId(data["_id"])},{"$set":{"stationName":data.get('stationName'),"location":data.get('location')}})
-#     if(data_update):
-#         return "success"
-#     return "failure"
+def AddTrains(data):
+    data_insert = db["Trains"].insert_one(data)
+    if(data_insert):
+        return "success"
+    return "failure"
+def UpdateTrains(data):   
+    data_update = db["Trains"].update_one({"_id":ObjectId(data["_id"])},{"$set":{"name":data.get('name'),"startStation":data.get('startStation'),"destinationStation":data.get('destinationStation')}})
+    if(data_update):
+        return "success"
+    return "failure"
     
 
 

@@ -58,10 +58,21 @@ def addStations():
     
     stations = StationsController.AddStations(data)
     return jsonify({"Success": True}) if stations else jsonify({"Success": False})
+
 @app.get('/getAllTrains')
 def getAllTrains():
     trains = TrainsController.getAllTrains()
     return trains
+@app.post('/updateTrain')
+def updateTrains():
+    data = request.get_json()
+    trains = TrainsController.UpdateTrains(data)
+    return jsonify({"Success": True}) if trains else jsonify({"Success": False})
+@app.post('/addTrain')
+def addTrains():
+    data = request.get_json()   
+    trains = TrainsController.AddTrains(data)
+    return jsonify({"Success": True}) if trains else jsonify({"Success": False})
 
 
 @app.route('/')
