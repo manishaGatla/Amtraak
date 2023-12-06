@@ -11,7 +11,13 @@ def getAllStations():
     if(data is not None):
         for d in data:
             d["_id"]=str(d["_id"])
+    return data if data is not None else jsonify({"Success":False,"message":"No Stations Found"})
+def AddStations(data):
+    data_insert = db["Stations"].insert_one(data)
+    if(data_insert):
+        return "success"
+    return "failure"
     
 
 
-    return data if data is not None else jsonify({"Success":False,"message":"No Stations Found"})
+    

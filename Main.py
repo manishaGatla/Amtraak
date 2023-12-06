@@ -34,6 +34,12 @@ def getAllStations():
     stations = StationsController.getAllStations()
     print(stations)
     return stations
+@app.post('/addStation')
+def addStations():
+    data = request.get_json()
+    
+    stations = StationsController.AddStations(data)
+    return stations
 
 
 @app.route('/')
