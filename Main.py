@@ -10,19 +10,13 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 templates = Jinja2Templates(directory="templates")
-@app.get('/login')
-def login():
-    data = request.get_json()
-    username = data.get('email')
-    password = data.get('password')
+@app.get('/login/<string:email>')
+def login(email):
+    #data = request.get_json()
     
-
-    user_type = LoginController.authenticate_user(username, password)
+    user_type = LoginController.authenticate_user(email)
     
-    if user_type:
-        return jsonify({"success": True, "user_type": user_type})
-    else:
-        return jsonify({"success": False, "message": "Invalid username or password"})
+    return user_type
 @app.post('/register')
 def Register():
     print("request")

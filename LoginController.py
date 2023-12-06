@@ -4,21 +4,25 @@ try:
 except:
     print("unable to connect or already in running state")
 
-def authenticate_user(email, password):
-    
-    if db is not None:
-        admin_collection = db["Admins"]
-        passenger_collection = db["Customers"]
+def authenticate_user(email):
 
-        
-        valid = admin_collection.find_one({"username": email, "password": password})
-        
-        
+    data = db["Customers"].find_one({"email":email})
     
-        if(passenger_collection.find_one({"username": email, "password": password})):
-            return "passenger"
+    if(data is None):
+        data = db["Admins"].find_one({"email":email})
+        data["isAdmin"] = 1
+        data["isCustomer"]=0
+    else:
+        data["isAdmin"] = 0
+        data["isCustomer"]=1
+    
+    print(data)
+    if(data is not None):
+        data["_id"] = str(data["_id"])
+    
+    
 
-    return None
+    return data
 def Register(data):
     customers_collection  = db["Customers"]
 
