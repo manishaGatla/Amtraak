@@ -14,7 +14,7 @@ export class LoginAmtraakComponent implements OnInit {
   user : any = {
     email: null,
     password: null
-  }
+  };
   showNotApprovedMsg: boolean =false;
   showIncorrectPasswordError: boolean = false;
   showNoUser: boolean = false;
@@ -29,11 +29,32 @@ export class LoginAmtraakComponent implements OnInit {
 
 
   getUserDetails(){
-    this.getService.getUser(this.user.email, this.user.password).subscribe((res)=>{
-      if(res){
+  this.showIncorrectPasswordError = false;
+  this.showNoUser = false;
+  this.getService.getUser(this.user.email).subscribe((res)=>{
+    if(res && res.Success == false && res.message == 'No Details Found!'){
+      this.showNoUser =  true;
+      this.user = {
+        email: null,
+        password: null
+      }
+    }
+    else{
+      if(res.password == this.user.password){
         this.getService.user = res;
         this.getService.isLoginSuccessful = true;
+        this.getService.user.isAdmin ? this.router.navigateByUrl('/stations') : this.router.navigateByUrl('/stations') ;
       }
-    })
+      else{
+        this.showIncorrectPasswordError = true;
+        this.user = {
+          email: null,
+          password: null
+        }
+      }
+     
+    }
+  })
+  
   }
 }

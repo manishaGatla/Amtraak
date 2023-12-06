@@ -1,13 +1,13 @@
 <section class="container">
   <section class="error">
     <div *ngIf="showIncorrectPasswordError">
-      <span>Incorrect Password</span>
+      <span  class="error-message t-r">Incorrect Password</span>
     </div>
     <div *ngIf="showNotApprovedMsg">
-      <span>Admin has not approved the visibility</span>
+      <span  class="error-message t-r">Admin has not approved the visibility</span>
     </div>
     <div *ngIf="showNoUser">
-      <span>User not found, please register</span>
+      <span  class="error-message t-r">User not found, please register</span>
     </div>
   </section>
   
@@ -27,7 +27,7 @@
         [class.fa-eye-slash]="!isPasswordVisible" (click)="togglePasswordVisibility()"></span>
       </div>
     
-      <button type="submit" class="btn btn-primary" >Login</button>
+      <button type="submit" class="btn btn-primary" (click)="getUserDetails()" >Login</button>
     </div>
 
 </section>
