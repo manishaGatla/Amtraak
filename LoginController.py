@@ -4,7 +4,7 @@ try:
 except:
     print("unable to connect or already in running state")
 
-def authenticate_user(email):
+def getAllUsersByEmail(email):
 
     data = db["Customers"].find_one({"email":email})
     

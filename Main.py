@@ -10,11 +10,11 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 templates = Jinja2Templates(directory="templates")
-@app.get('/login/<string:email>')
+@app.get('/getAllDetails/<string:email>')
 def login(email):
     #data = request.get_json()
     
-    user_type = LoginController.authenticate_user(email)
+    user_type = LoginController.getAllUsersByEmail(email)
     
     return user_type
 @app.post('/register')
