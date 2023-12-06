@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, jsonify
 import uvicorn
 import LoginController
 import StationsController
+import TrainsController
 from MongoConnectionHelper import connect_to_mongodb
 from flask_cors import CORS
 
@@ -57,6 +58,10 @@ def addStations():
     
     stations = StationsController.AddStations(data)
     return jsonify({"Success": True}) if stations else jsonify({"Success": False})
+@app.get('/getAllTrains')
+def getAllTrains():
+    trains = TrainsController.getAllTrains()
+    return trains
 
 
 @app.route('/')
