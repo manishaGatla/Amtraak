@@ -73,7 +73,7 @@ def addTrains():
     data = request.get_json()   
     trains = TrainsController.AddTrains(data)
     return jsonify({"Success": True}) if trains else jsonify({"Success": False})
-@app.get('/searchTrain')
+@app.post('/searchTrain')
 def SearchTrains():
     data = request.get_json()   
     trains = TrainsController.SearchTrains(data)
