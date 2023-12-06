@@ -12,9 +12,7 @@ def authenticate_user(email, password):
 
         
         valid = admin_collection.find_one({"username": email, "password": password})
-        print(valid)
-        if(valid):
-            return 
+        
         
     
         if(passenger_collection.find_one({"username": email, "password": password})):

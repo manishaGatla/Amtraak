@@ -4,9 +4,11 @@ from flask import Flask, render_template, request, jsonify
 import uvicorn
 import LoginController
 from MongoConnectionHelper import connect_to_mongodb
+from flask_cors import CORS
 
 # app = FastAPI()
 app = Flask(__name__)
+CORS(app)
 templates = Jinja2Templates(directory="templates")
 @app.get('/login')
 def login():
