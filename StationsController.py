@@ -1,3 +1,4 @@
+from bson import ObjectId
 from flask import jsonify
 from MongoConnectionHelper import connect_to_mongodb
 try:
@@ -15,6 +16,12 @@ def getAllStations():
 def AddStations(data):
     data_insert = db["Stations"].insert_one(data)
     if(data_insert):
+        return "success"
+    return "failure"
+def UpdateStations(data):
+    
+    data_update = db["Stations"].update_one({"_id":ObjectId(data["_id"])},{"$set":{"stationName":data.get('stationName'),"location":data.get('location')}})
+    if(data_update):
         return "success"
     return "failure"
     

@@ -30,16 +30,19 @@ def Register():
         return jsonify({"Success":False,"message":"Unable to register! Please contact Admin"})
 @app.get('/getAllStations')
 def getAllStations():
-    print("In Stations")
     stations = StationsController.getAllStations()
- 
     return stations
+@app.post('/updateStation')
+def updateStations():
+    data = request.get_json()
+    stations = StationsController.UpdateStations(data)
+    return jsonify({"Success": True}) if stations else jsonify({"Success": False})
 @app.post('/addStation')
 def addStations():
     data = request.get_json()
     
     stations = StationsController.AddStations(data)
-    return jsonify({"Success": True}) if  stations else jsonify({"Success": False})
+    return jsonify({"Success": True}) if stations else jsonify({"Success": False})
 
 
 @app.route('/')
