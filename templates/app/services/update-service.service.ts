@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class UpdateServiceService {
 
   constructor(private httpclient : HttpClient) { }
-  baseUrl = "https://localhost:5000/";
+  baseUrl = "http://127.0.0.1:5000/";
   user : any ={
     name : null,
     email : null,

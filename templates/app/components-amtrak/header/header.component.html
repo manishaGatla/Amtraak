@@ -6,7 +6,7 @@
         <li> <a class="margins" *ngIf="getService.isLoginSuccessful" routerLink="/schedules" routerLinkActive="active">Schedules</a></li>
         <li> <a class="margins" *ngIf="getService.isLoginSuccessful" routerLink="/trains" routerLinkActive="active">Trains</a></li>
         <li> <a class="margins" *ngIf="getService.isLoginSuccessful" routerLink="/stations" routerLinkActive="active">Stations</a></li>
-        <li> <a class="margins" *ngIf="getService.isLoginSuccessful" routerLink="/stations" routerLinkActive="active" (click) ="logOut()">Log Out</a></li>
+        <li> <a class="margins" *ngIf="getService.isLoginSuccessful" routerLink="" (click) ="logOut()">Log Out</a></li>
     </ul>
   </nav>
   <router-outlet></router-outlet>
