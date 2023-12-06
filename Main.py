@@ -3,6 +3,7 @@ from fastapi.templating import Jinja2Templates
 from flask import Flask, render_template, request, jsonify
 import uvicorn
 import LoginController
+import StationsController
 from MongoConnectionHelper import connect_to_mongodb
 from flask_cors import CORS
 
@@ -27,6 +28,12 @@ def Register():
         return jsonify({"Success": True})
     else:
         return jsonify({"Success":False,"message":"Unable to register! Please contact Admin"})
+@app.get('/getAllStations')
+def getAllStations():
+    stations = StationsController.getAllStations()
+    return stations
+
+
 @app.route('/')
 def root():
   return templates.TemplateResponse("index.html", {"request": request})

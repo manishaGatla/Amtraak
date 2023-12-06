@@ -1,3 +1,4 @@
+from flask import jsonify
 from MongoConnectionHelper import connect_to_mongodb
 try:
     db = connect_to_mongodb()
@@ -23,7 +24,7 @@ def getAllUsersByEmail(email):
     
     
 
-    return data
+    return data if data is not None else jsonify({"Success":False,"message":"No Details Found!"})
 def Register(data):
     customers_collection  = db["Customers"]
 
