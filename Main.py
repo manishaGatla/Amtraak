@@ -78,6 +78,11 @@ def SearchTrains():
     data = request.get_json()   
     trains = TrainsController.SearchTrains(data)
     return trains if not None else jsonify({"message":"Not Found"}) 
+@app.post('/addSchedule')
+def addSchedule():
+    data = request.get_json()   
+    trains = TrainsController.AddSchedule(data)
+    return jsonify({"Success": True}) if trains else jsonify({"Success": False})
 
 
 @app.route('/')
