@@ -32,14 +32,14 @@ def Register():
 def getAllStations():
     print("In Stations")
     stations = StationsController.getAllStations()
-    print(stations)
+ 
     return stations
 @app.post('/addStation')
 def addStations():
     data = request.get_json()
     
     stations = StationsController.AddStations(data)
-    return stations
+    return jsonify({"Success": True}) if  stations else jsonify({"Success": False})
 
 
 @app.route('/')
