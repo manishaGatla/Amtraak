@@ -23,6 +23,26 @@ def UpdateTrains(data):
     if(data_update):
         return "success"
     return "failure"
+
+def SearchTrains(data):
+    
+    query = {}
+    if(data.get('name') is not None and data.get('name')!=''):
+        query["name"]= data.get('name')
+    if(data.get('startStation') is not None and data.get('startStation')!=''):
+        query["startStation"]= data.get('startStation')
+    if(data.get('destinationStation') is not None and data.get('destinationStation')!=''):
+        query["destinationStation"]= data.get('destinationStation')
+    print(data)
+    print(query)
+    trainDetails = list(db["Trains"].find(query))
+    if(trainDetails is not None):
+        for d in trainDetails:
+            d["_id"]=str(d["_id"])
+    return trainDetails if trainDetails is not None else jsonify({"Success":False,"message":"No Trains Found"})
+
+
+
     
 
 
