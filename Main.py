@@ -30,7 +30,9 @@ def Register():
         return jsonify({"Success":False,"message":"Unable to register! Please contact Admin"})
 @app.get('/getAllStations')
 def getAllStations():
+    print("In Stations")
     stations = StationsController.getAllStations()
+    print(stations)
     return stations
 
 
