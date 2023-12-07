@@ -20,10 +20,19 @@ export class UpdateServiceService {
   };
 
   updateStation(reqBody: any): Observable<any>{
-    return this.httpclient.post(this.baseUrl + "register", reqBody);
+    return this.httpclient.post(this.baseUrl + "updateStation", reqBody);
   }
 
   updateTrain(reqBody: any): Observable<any>{
-    return this.httpclient.post(this.baseUrl + "register", reqBody);
+    return this.httpclient.post(this.baseUrl + "updateTrain", reqBody);
+  }
+  
+
+  updateSchedule(reqBody: any): Observable<any>{
+    return this.httpclient.post(this.baseUrl + "updateSchedule", reqBody);
+  }
+
+  updateTicket(reqBody: any): Observable<any>{
+    return this.httpclient.post(this.baseUrl + "updateTickets", reqBody);
   }
 }

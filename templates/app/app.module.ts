@@ -13,6 +13,7 @@ import { StationsAmtraakComponent } from './components-amtrak/stations-amtraak/s
 import { SchedulesComponent } from './components-amtrak/schedules/schedules.component';
 
 import { HttpClientModule } from '@angular/common/http';
+import { TicketsViewComponent } from './components-amtrak/tickets-view/tickets-view.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { HttpClientModule } from '@angular/common/http';
     RegisterAmtraakComponent,
     HeaderComponent,
     StationsAmtraakComponent,
-    SchedulesComponent
+    SchedulesComponent,
+    TicketsViewComponent
   ],
   imports: [
     BrowserModule,

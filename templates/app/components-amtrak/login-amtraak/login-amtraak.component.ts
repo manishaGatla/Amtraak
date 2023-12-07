@@ -43,7 +43,7 @@ export class LoginAmtraakComponent implements OnInit {
       if(res.password == this.user.password){
         this.getService.user = res;
         this.getService.isLoginSuccessful = true;
-        this.getService.user.isAdmin ? this.router.navigateByUrl('/stations') : this.router.navigateByUrl('/stations') ;
+        this.getService.user.isAdmin ? this.router.navigateByUrl('/stations') : this.router.navigateByUrl('/tickets') ;
       }
       else{
         this.showIncorrectPasswordError = true;

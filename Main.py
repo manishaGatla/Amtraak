@@ -7,11 +7,13 @@ import StationsController
 import TrainsController
 from MongoConnectionHelper import connect_to_mongodb
 import ScheduleController
+import Bookings
 from flask_cors import CORS
 
 # app = FastAPI()
 app = Flask(__name__)
-CORS(app,resources={r"/*": {"origins": "*"}})
+#CORS(app,resources={r"/*": {"origins": "*"}})
+CORS(app, origins='http://localhost:4200', supports_credentials=True)
 # origins = [
 #     "http://localhost.tiangolo.com",
 #     "https://localhost.tiangolo.com",
@@ -91,6 +93,61 @@ def getAllSchedules():
     schedules = ScheduleController.GetAllSchedules()
     return schedules if not None else jsonify({"message":"No Schedule Found"})
 
+
+@app.post('/getAllTicketsOfUser')
+def getAllTicketsOfUser():
+    data = request.get_json()
+    schedules = Bookings.getAllTicketsOfUser(data)
+    return schedules if not None else jsonify({"message":"No Schedule Found"})
+
+
+@app.post('/getAllBookings')
+def getAllBookings():
+    data = request.get_json()
+    bookings = Bookings.getAllBookings(data)
+    return bookings if not None else jsonify({"message":"No Schedule Found"})
+
+@app.post('/getSchedulesBySearch')
+def getSchedulesBySearch():
+     data = request.get_json()
+     schedules = ScheduleController.GetSchedulesWithSearch(data)
+     return schedules if not None else jsonify({"message":"Not Found"}) 
+
+@app.post('/updateSchedule')
+def updateSchedule():
+    data = request.get_json()
+    schedules = ScheduleController.UpdateSchedules(data)
+    return jsonify({"Success": True}) if not None else jsonify({"message": "Not Found"})
+
+@app.post('/addBooking')
+def addBooking():
+    data = request.get_json()
+    bookings = Bookings.AddBooking(data)
+    return jsonify({"Success": True, "inserted_id": bookings}) if not None else jsonify({"message": "Not Found"})
+
+@app.post('/addPayments')
+def addPayments():
+    data = request.get_json()
+    payments = Bookings.AddPayments(data)
+    return jsonify({"Success": True}) if not None else jsonify({"message": "Not Found"})
+
+@app.post('/addTickets')
+def addTickets():
+    data = request.get_json()
+    tickets = Bookings.AddTickets(data)
+    return jsonify({"Success": True }) if not None else jsonify({"message": "Not Found"})
+
+@app.post('/updateTickets')
+def updateTickets():
+    data = request.get_json()
+    tickets = ScheduleController.UpdateTicket(data)
+    return jsonify({"Success": True }) if not None else jsonify({"message": "Not Found"})
+
+@app.get('/getAllTickets')
+def getAllTickets():
+       
+    tickets = ScheduleController.GetAllTickets()
+    return tickets if not None else jsonify({"message":"No Schedule Found"})
 
 @app.route('/')
 def root():

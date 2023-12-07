@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GetServiceService } from 'templates/app/services/get-service.service';
 import { InsertServiceService } from 'templates/app/services/insert-service.service';
@@ -9,18 +9,14 @@ import { UpdateServiceService } from 'templates/app/services/update-service.serv
   templateUrl: './trains-amtraak.component.html',
   styleUrls: ['./trains-amtraak.component.scss']
 })
-export class TrainsAmtraakComponent {
+export class TrainsAmtraakComponent implements OnInit{
 
   showTrainForm: boolean = false;
   stations:any = [
-    { _id : 1,name: 'Station A'},
-    { _id : 2, name: 'Station B'},
-    // Add more station details for the journey
+   
   ]
-  trains = [
-    { name: 'Train 1', startStation: 'Station A', destinationStation: 'Station B', editable: false },
-    { name: 'Train 2', startStation: 'Station C', destinationStation: 'Station D', editable: false },
-    // Add more train data as needed
+  trains: any = [
+   
   ];
   showEditForm: boolean = false;
   selectedTrain: any;
@@ -29,6 +25,22 @@ export class TrainsAmtraakComponent {
   endStation: any = '';
 
   constructor(private router: Router,public getService: GetServiceService, public insertService: InsertServiceService , public updateService: UpdateServiceService) {}
+
+
+  ngOnInit(): void {
+    this.getStations();
+    this.getTrains();
+  }
+
+  getStations(){
+    this.getService.getStations().subscribe((res)=>{
+      if(res){
+        this.stations = res;
+       
+      }
+    })
+  }
+
 
   showAddTrainForm() {
     this.showTrainForm = true;
@@ -48,10 +60,51 @@ export class TrainsAmtraakComponent {
   }
   toggleEdit(index: number) {
     this.trains[index].editable = !this.trains[index].editable;
+    this.trains[index].updatedDestinationStation = this.trains[index].destinationStation;
+    this.trains[index].updatedStartStation = this.trains[index].startStation;
   }
 
   saveEdit(index: number) {
-    this.trains[index].editable = false;
-    // You can add logic here to save the edited values if needed
+    var body = {
+      _id: this.trains[index]._id,
+      name               :this.trains[index].updatedName,
+      destinationStation : this.trains[index].updatedDestinationStation,
+      startStation        : this.trains[index].updatedStartStation
+    }
+    this.updateService.updateTrain(body).subscribe((res)=>{
+      if(res){
+        this.getTrains();
+      }
+    })
+  }
+
+  addTrain(){
+    var body ={
+      name              :this.trainName,
+      destinationStation:this.endStation,
+      startStation      :this.startStation,
+      noOfSeatsInBusinessClass: 50,
+      noOfSeatsInFirstClass: 30 
+    }
+    this.insertService.addTrain(body).subscribe((res)=>{
+      if(res){
+        this.showTrainForm = false;
+        this.getTrains();
+      }
+    })
+  }
+
+  getTrains(){
+    this.getService.getTrains().subscribe((res)=>{
+      if(res){
+        this.trains = res;
+        this.trains.forEach((c: any)=>{
+          c.updatedName = c.name;
+          c.updatedDestinationStation = c.destinationStation;
+          c.updatedStartStation = c.startStation;
+          c.editable = false;
+        })
+      }
+    })
   }
 }

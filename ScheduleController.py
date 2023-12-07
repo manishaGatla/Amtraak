@@ -18,3 +18,45 @@ def GetAllSchedules():
     for d in data:
         d["_id"]=str(d["_id"])
     return data
+
+def UpdateSchedules(data):   
+    data_update = db["Schedule"].update_one({"_id":ObjectId(data["_id"])},
+            {"$set":{"trainName":data.get('trainName'),
+                     "startStation":data.get('startStation'),
+                     "destinationStation":data.get('destinationStation'),
+                     "startDay": data.get('startDay'),
+                     "endDay":data.get('endDay'),
+                     "startTime": data.get('startTime'),
+                     "endTime": data.get('endTime'),
+                     "stations":data.get('stations')}})
+    if(data_update):
+        return "success"
+    return "failure"
+
+def GetSchedulesWithSearch(data):
+    query = {}
+    if(data.get('trainName') is not None and data.get('trainName')!=''):
+        query["trainName"]= data.get('trainName')
+    if(data.get('startStation') is not None and data.get('startStation')!=''):
+        query["startStation"]= data.get('startStation')
+    if(data.get('destinationStation') is not None and data.get('destinationStation')!=''):
+        query["destinationStation"]= data.get('destinationStation')
+    scheduleDetails = list(db["Schedule"].find(query))
+    if(scheduleDetails is not None):
+        for d in scheduleDetails:
+            d["_id"]=str(d["_id"])
+    return scheduleDetails if scheduleDetails is not None else jsonify({"Success":False,"message":"No Trains Found"})
+
+def UpdateTicket(data):   
+    data_update = db["Tickets"].update_one({"_id":ObjectId(data["_id"])},
+            {"$set":{"status":"Cancelled"}})
+    if(data_update):
+        return "success"
+    return "failure"
+
+def GetAllTickets():
+    data = list(db["Tickets"].find({}))
+    for d in data:
+        d["_id"]=str(d["_id"])
+    return data
+ 

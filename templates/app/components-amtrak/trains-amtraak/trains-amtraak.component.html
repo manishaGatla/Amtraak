@@ -14,18 +14,18 @@
         <div class="margins">
           <label for="startStation">Start Station:</label>
           <select id="startStation" name="startStation" [(ngModel)]="startStation">
-            <option *ngFor="let station of stations" [value]="station.name">{{ station.name }}</option>
+            <option *ngFor="let station of stations" [value]="station.stationName">{{ station.stationName }}</option>
           </select>
         </div>
         <div class="margins">
           <label for="endStation">End Station:</label>
           <select id="endStation" name="endStation" [(ngModel)]="endStation">
-            <option *ngFor="let station of stations" [value]="station.name">{{ station.name }}</option>
+            <option *ngFor="let station of stations" [value]="station.stationName">{{ station.stationName }}</option>
           </select>
         </div>
         
     
-          <button type="submit" class="margins">Add Train</button>
+          <button type="submit" class="margins" (click)="addTrain()">Add Train</button>
           <button type="submit" class="margins" (click)="OnBackClicked()">Back</button>
       </div>
     
@@ -52,15 +52,15 @@
               </tr>
               <ng-template #editRow>
                 <tr>
-                  <td><input type="text" [(ngModel)]="trains[i].name" /></td>
+                  <td><input type="text" [(ngModel)]="trains[i].updatedName" /></td>
                   <td>
-                    <select [(ngModel)]="trains[i].startStation">
-                      <option *ngFor="let station of stations" [value]="station.name">{{ station.name }}</option>
+                    <select [(ngModel)]="trains[i].updatedStartStation">
+                      <option *ngFor="let station of stations" [value]="station.stationName">{{ station.stationName }}</option>
                     </select>
                   </td>
                   <td>
-                    <select [(ngModel)]="trains[i].destinationStation">
-                      <option *ngFor="let station of stations" [value]="station.name">{{ station.name }}</option>
+                    <select [(ngModel)]="trains[i].updatedDestinationStation">
+                      <option *ngFor="let station of stations" [value]="station.stationName">{{ station.stationName }}</option>
                     </select>
                   </td>
                   <td>

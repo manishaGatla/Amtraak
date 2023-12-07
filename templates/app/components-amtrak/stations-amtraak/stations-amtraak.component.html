@@ -20,7 +20,7 @@
       </div>
      
       
-      <div><button type="submit">Add Station</button>
+      <div><button type="submit" (click)="addStation()">Add Station</button>
         <button type="submit" (click)="OnBackClicked()">Back</button></div>
     </div>
   </div>
@@ -37,16 +37,18 @@
         <tbody>
           <tr *ngFor="let station of stations; let i = index">
             <td>
-              <input type="text" [(ngModel)]="stations[i].name" [disabled]="!station.editable">
+              <span *ngIf="!station.editable">{{station.stationName}}</span>
+              <input type="text" *ngIf="station.editable" [(ngModel)]="station.updatedName" [disabled]="!station.editable">
             </td>
             <td>
-              <input type="text" [(ngModel)]="stations[i].location" [disabled]="!station.editable">
+              <span *ngIf="!station.editable">{{station.location}}</span>
+              <input type="text" *ngIf="station.editable" [(ngModel)]="station.updatedLocation" [disabled]="!station.editable">
             </td>
             <td>
               <button (click)="toggleEdit(station)">
                 {{ station.editable ? 'Save' : 'Edit' }}
               </button>
-              <button class="margins"*ngIf="station.editable" (click)="toggleEdit(station)">
+              <button class="margins"*ngIf="station.editable" (click)="cancelEdit(station)">
                   Back
                 </button>
             </td>

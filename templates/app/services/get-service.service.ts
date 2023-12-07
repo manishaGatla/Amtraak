@@ -28,19 +28,35 @@ export class GetServiceService {
   }
 
   getStations(): Observable<any>{
-    return this.httpclient.get(this.baseUrl +'api/login');
+    return this.httpclient.get(this.baseUrl +'getAllStations');
   }
   
-  getTrains(userEmail: any, password: any): Observable<any>{
-    return this.httpclient.get(this.baseUrl +'api/login');
+  getTrains(): Observable<any>{
+    return this.httpclient.get(this.baseUrl +'getAllTrains');
   }
 
-  getSchedules(userEmail: any, password: any): Observable<any>{
-    return this.httpclient.get(this.baseUrl +'api/login');
+  getSchedules(): Observable<any>{
+    return this.httpclient.get(this.baseUrl +'getAllSchedules');
   }
 
-  getTickets(userEmail: any, password: any): Observable<any>{
-    return this.httpclient.get(this.baseUrl +'api/login');
+  getBookingsOfTrain(train: any): Observable<any>{
+    return this.httpclient.post(this.baseUrl +'getAllBookings', train);
+  }
+
+  searchTrains(body: any): Observable<any>{
+    return this.httpclient.post(this.baseUrl +'searchTrain', body);
+  }
+
+  getSchedulesWithSearch(body: any):Observable<any>{
+    return this.httpclient.post(this.baseUrl + 'getSchedulesBySearch', body)
+  }
+
+  getAllTicketsOfUser(body: any):Observable<any>{
+    return this.httpclient.post(this.baseUrl + 'getAllTicketsOfUser', body)
+  }
+
+  getAllTickets():Observable<any>{
+    return this.httpclient.get(this.baseUrl + 'getAllTickets', )
   }
 
 }
