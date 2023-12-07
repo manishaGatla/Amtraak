@@ -37,10 +37,22 @@ def GetSchedulesWithSearch(data):
     query = {}
     if(data.get('trainName') is not None and data.get('trainName')!=''):
         query["trainName"]= data.get('trainName')
-    if(data.get('startStation') is not None and data.get('startStation')!=''):
-        query["startStation"]= data.get('startStation')
-    if(data.get('destinationStation') is not None and data.get('destinationStation')!=''):
-        query["destinationStation"]= data.get('destinationStation')
+    # if(data.get('startStation') is not None and data.get('startStation')!=''):
+    #     query["startStation"]= data.get('startStation')
+    # if(data.get('destinationStation') is not None and data.get('destinationStation')!=''):
+    #     query["destinationStation"]= data.get('destinationStation')
+    if data.get('startStation'):
+        query["$or"] = [
+            {"startStation": data.get('startStation')},  # Checking start station
+            {"stations.stationName": data.get('startStation')}  # Checking intermediate stations
+        ]
+    if data.get('destinationStation'):
+        # query["destinationStation"] = data.get('destinationStation')
+         query["$or"] = [
+            {"destinationStation": data.get('destinationStation')},  # Checking start station
+            {"stations.stationName": data.get('destinationStation')}  # Checking intermediate stations
+        ]
+
     scheduleDetails = list(db["Schedule"].find(query))
     if(scheduleDetails is not None):
         for d in scheduleDetails:
