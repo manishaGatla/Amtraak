@@ -26,6 +26,7 @@
         <td>{{ ticket.status }}</td>
         <td>
           <button *ngIf="ticket.status !== 'Cancelled' && getService.user.isCustomer" (click)="cancelReservation(ticket)">Cancel Reservation</button>
+
         </td>
       </tr>
     </tbody>
