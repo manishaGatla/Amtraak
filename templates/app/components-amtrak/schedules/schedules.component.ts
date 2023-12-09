@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { GetServiceService } from 'templates/app/services/get-service.service';
 import { InsertServiceService } from 'templates/app/services/insert-service.service';
 import { UpdateServiceService } from 'templates/app/services/update-service.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-schedules',
@@ -19,18 +20,23 @@ export class SchedulesComponent  implements OnInit{
   existingSchedules: any= [];
   trains: any = [];
   isEditClicked: boolean = false;
+  startStation: any = null;
+  endStation: any = null;
   stations : any = [
    
   ];
+  stationName: any = null;
+  arrivalTime: any = null;
   masterStations: any = [];
   selectedScheduleForEdit: any = null;
   selectedStartStation: any = null;
   selectedEndStation  : any = null;
+  scheduleStations: any = [];
 
   daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 
-  constructor(private router: Router,public getService: GetServiceService, public insertService: InsertServiceService , public updateService: UpdateServiceService) {}
+  constructor(private router: Router,private datePipe: DatePipe,public getService: GetServiceService, public insertService: InsertServiceService , public updateService: UpdateServiceService) {}
   
   ngOnInit(): void {
     this.getStations();
@@ -44,6 +50,17 @@ export class SchedulesComponent  implements OnInit{
         this.trains = res;
       }
     })
+  }
+
+  convertTo12HourFormat(originalTime: string): string {
+    const parsedTime = originalTime.split(':');
+    const hours = parseInt(parsedTime[0], 10);
+    const minutes = parseInt(parsedTime[1], 10);
+    const time = new Date();
+    time.setHours(hours);
+    time.setMinutes(minutes);
+
+    return this.datePipe.transform(time, 'h:mm a') || '';
   }
   
 
@@ -63,23 +80,17 @@ export class SchedulesComponent  implements OnInit{
 
   saveNewSchedule() {
     if(this.isEditClicked){      
-    var train = this.trains.find((train:any) => train.name === this.selectedTrain);
-      this.stations.sort((a: any,b: any)=> a.sequence - b.sequence);  
-      var station = this.masterStations.find((st: any)=> st.stationName == this.selectedEndStation);
-      let seq = this.stations[this.stations.length -1].sequence;
-      station['sequence']= Number(seq) + 1;
-      station['arrivalTime'] = this.endTime;
-      this.stations.push(station);
+
       var body ={
         _id: this.selectedScheduleForEdit._id,
         trainName: this.selectedTrain,
-        startStation: train.startStation,
-        destinationStation: train.destinationStation,
+        startStation: this.startStation,
+        destinationStation: this.endStation,
         startDay: this.selectedStartDay,
         endDay:this.selectedEndDay,
         startTime:this.startTime,
         endTime: this.endTime,
-        stations: this.stations.filter((c: any)=> c.sequence != null)
+        stations: this.scheduleStations
       }
 
       this.updateService.updateSchedule(body).subscribe((res)=>{
@@ -90,22 +101,16 @@ export class SchedulesComponent  implements OnInit{
 
     }
     else{
-    var train = this.trains.find((train:any) => train.name === this.selectedTrain);
-    var station = this.masterStations.find((st: any)=> st.stationName == this.selectedEndStation);
-    this.stations.sort((a: any,b: any)=> a.sequence - b.sequence);
-    let seq = this.stations[this.stations.length -1].sequence;
-    station['sequence']= Number(seq) + 1;
-    station['arrivalTime'] = this.endTime;
-    this.stations.push(station);
+  var trainNum = this.trains.find((r: any)=> r.trainName == this.selectedTrain).trainNumber;
     var bodyForNew ={
       trainName: this.selectedTrain,
-      startStation: train.startStation,
-      destinationStation: train.destinationStation,
+      trainNumber: trainNum,
+      startStation: this.startStation,
+      destinationStation: this.endStation,
       startDay: this.selectedStartDay,
-      endDay:this.selectedEndDay,
       startTime:this.startTime,
       endTime: this.endTime,
-      stations: this.stations.filter((c: any)=> c.sequence != null)
+      stations: this.scheduleStations
     }
     this.insertService.addSchedule(bodyForNew).subscribe((res)=>{
       this.showNewScheduleForm = false;
@@ -115,22 +120,16 @@ export class SchedulesComponent  implements OnInit{
   }
   }
 
-  onTrainSelectedChange(){
-    var train = this.trains.find((train:any) => train.name === this.selectedTrain);
-    this.selectedStartStation = train.startStation;
-    this.selectedEndStation    = train.destinationStation;
-    this.stations = this.stations.filter((station: any)=> station.stationName !== this.selectedEndStation);
-    this.stations.forEach((st : any)=>{
-      st.sequence = null;
-      st.arrivalTime = null;
+  addStation(){
+    this.scheduleStations.push({
+      stationName: this.stationName,
+      arrivalTime :this.arrivalTime,
+      sequence: this.scheduleStations.length + 1
     })
-    this.stations.forEach((st : any)=>{
-      if(st.stationName == this.selectedStartStation){
-        st.sequence = 1;
-      }
-      
-    })
+    this.stationName= null;
+    this.arrivalTime= null;
   }
+
 
   getStartStation() {
     var train = this.trains.find((train: any) => train.name === this.selectedTrain);
@@ -159,14 +158,12 @@ export class SchedulesComponent  implements OnInit{
 
   editSchedule(schedule: any ){
     this.selectedTrain=schedule.trainName;
-    this.selectedEndDay= schedule.endDay;
     this.selectedStartDay = schedule.startDay;
     
     var train = this.trains.find((train:any) => train.name === this.selectedTrain);
-    this.selectedStartStation = train.startStation;
-    this.selectedEndStation    = train.destinationStation;
-    this.stations = schedule.stations;
-    this.stations.pop();
+    this.startStation = schedule.startStation;
+    this.endStation    = schedule.destinationStation;
+    this.scheduleStations = schedule.stations;
     this.startTime= schedule.startTime;
     this.endTime= schedule.endTime;
     this.isEditClicked = true;
@@ -182,6 +179,11 @@ export class SchedulesComponent  implements OnInit{
 
   toggleStatus(schedule: any){
     
+  }
+
+  removeFromSchedule(station: any){
+    var index =this.scheduleStations.findIndex((st: any) => st.stationName == station.stationName);
+    this.scheduleStations.splice(index,1);
   }
 
   getStations(){

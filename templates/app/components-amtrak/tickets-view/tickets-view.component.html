@@ -2,7 +2,7 @@
     <thead>
       <tr>
         <th>Passenger Name</th>
-        <th>Age</th>
+        <th>Date of Birth</th>
         <th>Gender</th>
         <th>Train Name</th>
         <th>Start Station</th>
@@ -16,12 +16,12 @@
     <tbody>
       <tr *ngFor="let ticket of tickets">
         <td>{{ ticket.passengerName }}</td>
-        <td>{{ ticket.age }}</td>
+        <td>{{ ticket.dob }}</td>
         <td>{{ ticket.gender }}</td>
         <td>{{ ticket.trainName }}</td>
         <td>{{ ticket.startStation }}</td>
         <td>{{ ticket.destinationStation }}</td>
-        <td>{{ ticket.estimatedArrivalTime }}</td>
+        <td>{{ convertTo12HourFormat(ticket.estimatedArrivalTime) }}</td>
         <td>{{ ticket.fare }}</td>
         <td>{{ ticket.status }}</td>
         <td>

@@ -21,8 +21,13 @@ export class TrainsAmtraakComponent implements OnInit{
   showEditForm: boolean = false;
   selectedTrain: any;
   trainName: any = '';
+  trainFirstClass: any = '';
+  trainNumber : any ='';
   startStation: any = '';
   endStation: any = '';
+  trainBusinessClass: any ='';
+  platformNumber: any  ='';
+  trainEconomyClass : any = '';
 
   constructor(private router: Router,public getService: GetServiceService, public insertService: InsertServiceService , public updateService: UpdateServiceService) {}
 
@@ -60,16 +65,23 @@ export class TrainsAmtraakComponent implements OnInit{
   }
   toggleEdit(index: number) {
     this.trains[index].editable = !this.trains[index].editable;
-    this.trains[index].updatedDestinationStation = this.trains[index].destinationStation;
-    this.trains[index].updatedStartStation = this.trains[index].startStation;
+    this.trains[index].updatedTrainNumber = this.trains[index].trainNumber;
+    this.trains[index].updatedTrainName = this.trains[index].trainName;
+    this.trains[index].updatedFirstClassNoOfSeats = this.trains[index].firstClassNoOfSeats;
+    this.trains[index].updatedBusinessClassNoOfSeats = this.trains[index].businessClassNoOfSeats;
+    this.trains[index].updatedEconomyClassNoOfSeats = this.trains[index].economyClassNoOfSeats;
+    this.trains[index].updatedPlatformNumber = this.trains[index].platformNumber
   }
 
   saveEdit(index: number) {
     var body = {
       _id: this.trains[index]._id,
-      name               :this.trains[index].updatedName,
-      destinationStation : this.trains[index].updatedDestinationStation,
-      startStation        : this.trains[index].updatedStartStation
+      trainName               :this.trains[index].updatedTrainName,
+      trainNumber : this.trains[index].updatedTrainNumber,
+      firstClassNoOfSeats          : this.trains[index].updatedFirstClassNoOfSeats,
+      businessClassNoOfSeats       : this.trains[index].updatedBusinessClassNoOfSeats,
+      economyClassNoOfSeats        : this.trains[index].updatedEconomyClassNoOfSeats,
+      platformNumber               : this.trains[index].updatedPlatformNumber
     }
     this.updateService.updateTrain(body).subscribe((res)=>{
       if(res){
@@ -80,11 +92,13 @@ export class TrainsAmtraakComponent implements OnInit{
 
   addTrain(){
     var body ={
-      name              :this.trainName,
-      destinationStation:this.endStation,
-      startStation      :this.startStation,
-      noOfSeatsInBusinessClass: 50,
-      noOfSeatsInFirstClass: 30 
+      trainName              :this.trainName,
+      trainNumber: this.trainNumber,
+      
+      firstClassNoOfSeats        : this.trainFirstClass,
+      businessClassNoOfSeats : this.trainBusinessClass,
+      economyClassNoOfSeats        : this.trainEconomyClass,
+      platformNumber : this.platformNumber
     }
     this.insertService.addTrain(body).subscribe((res)=>{
       if(res){
@@ -102,6 +116,11 @@ export class TrainsAmtraakComponent implements OnInit{
           c.updatedName = c.name;
           c.updatedDestinationStation = c.destinationStation;
           c.updatedStartStation = c.startStation;
+          c.updatedFirstClassNoOfSeats = c.firstClassNoOfSeats
+          c.updatedBusinessClassNoOfSeats= c.businessClassNoOfSeats
+          c.updatedEconomyClassNoOfSeats =c.economyClassNoOfSeats
+          c.updatedPlatformNumber = c.platformNumber
+          
           c.editable = false;
         })
       }

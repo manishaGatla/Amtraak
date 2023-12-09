@@ -14,6 +14,7 @@ import { SchedulesComponent } from './components-amtrak/schedules/schedules.comp
 
 import { HttpClientModule } from '@angular/common/http';
 import { TicketsViewComponent } from './components-amtrak/tickets-view/tickets-view.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { TicketsViewComponent } from './components-amtrak/tickets-view/tickets-v
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

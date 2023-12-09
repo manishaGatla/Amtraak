@@ -15,7 +15,8 @@ export class RegisterAmtraakComponent implements OnInit {
   confirmPassword: any = null;
   isPhoneNumberValid: boolean = true;
   customer: any ={
-    name : null,
+    firstName : null,
+    lastName : null,
     email : null,
     password: null,
     phoneNumber: null,
@@ -59,7 +60,8 @@ registercustomer(){
   this.insertService.registerUser(this.customer).subscribe((res)=>{
     this.router.navigateByUrl('/login');
     this.customer = {
-      name : null,
+      firstName : null,
+    lastName : null,
       email : null,
       password: null,
       phoneNumber: null,

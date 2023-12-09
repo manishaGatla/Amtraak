@@ -8,20 +8,28 @@
     <div *ngIf="showTrainForm">
         <h3>Add Train</h3>
         <div class="margins">
+          <label for="trainName">Platform Number:</label>
+          <input type="text" id="trainName" name="platformNumber" [(ngModel)]="platformNumber">
+        </div>
+        <div class="margins">
+          <label for="trainName">Train Number:</label>
+          <input type="text" id="trainName" name="trainName" [(ngModel)]="trainNumber">
+        </div>
+        <div class="margins">
           <label for="trainName">Train Name:</label>
           <input type="text" id="trainName" name="trainName" [(ngModel)]="trainName">
         </div>
-        <div class="margins">
-          <label for="startStation">Start Station:</label>
-          <select id="startStation" name="startStation" [(ngModel)]="startStation">
-            <option *ngFor="let station of stations" [value]="station.stationName">{{ station.stationName }}</option>
-          </select>
+        <div>
+          <label for="trainName">No of Seats for First Class:</label>
+          <input type="text" id="trainName" name="trainName" [(ngModel)]="trainFirstClass">
         </div>
-        <div class="margins">
-          <label for="endStation">End Station:</label>
-          <select id="endStation" name="endStation" [(ngModel)]="endStation">
-            <option *ngFor="let station of stations" [value]="station.stationName">{{ station.stationName }}</option>
-          </select>
+        <div>          
+          <label for="trainName">No of Seats for Business Class:</label>
+          <input type="text" id="trainName" name="trainName" [(ngModel)]="trainBusinessClass">
+        </div>
+        <div>          
+          <label for="trainName">No of Seats for Economy Class:</label>
+          <input type="text" id="trainName" name="trainName" [(ngModel)]="trainEconomyClass">
         </div>
         
     
@@ -34,34 +42,43 @@
         <table>
           <thead>
             <tr>
+              <th>Platform Number</th>
+              <th>Train Number</th>
               <th>Train Name</th>
-              <th>Start Station</th>
-              <th>Destination Station</th>
+              <th>First Class No of Seats:</th>
+              <th>Business Class No of Seats:</th>
+              <th>Economy Class No of Seats:</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             <ng-container *ngFor="let train of trains; let i = index">
               <tr *ngIf="!train.editable; else editRow">
-                <td>{{ train.name }}</td>
-                <td>{{ train.startStation }}</td>
-                <td>{{ train.destinationStation }}</td>
+                <td>{{ train.platformNumber }}</td>
+                <td>{{ train.trainNumber }}</td>
+                <td>{{ train.trainName }}</td>
+                <td>{{train.firstClassNoOfSeats}}</td>
+                <td>{{train.businessClassNoOfSeats}}</td>
+                <td>{{train.economyClassNoOfSeats}}</td>
                 <td>
                   <button (click)="toggleEdit(i)">Edit</button>
                 </td>
               </tr>
               <ng-template #editRow>
                 <tr>
-                  <td><input type="text" [(ngModel)]="trains[i].updatedName" /></td>
+                  <td><input type="text" [(ngModel)]="trains[i].updatedPlatformNumber" /></td>
+                  <td><input type="text" [(ngModel)]="trains[i].updatedTrainNumber" /></td>
                   <td>
-                    <select [(ngModel)]="trains[i].updatedStartStation">
-                      <option *ngFor="let station of stations" [value]="station.stationName">{{ station.stationName }}</option>
-                    </select>
+                    <input type="text" [(ngModel)]="trains[i].updatedTrainName" />
                   </td>
                   <td>
-                    <select [(ngModel)]="trains[i].updatedDestinationStation">
-                      <option *ngFor="let station of stations" [value]="station.stationName">{{ station.stationName }}</option>
-                    </select>
+                    <input type="text" [(ngModel)]="trains[i].updatedFirstClassNoOfSeats" />
+                  </td>
+                  <td>
+                    <input type="text" [(ngModel)]="trains[i].updatedBusinessClassNoOfSeats" />
+                  </td>
+                  <td>
+                    <input type="text" [(ngModel)]="trains[i].updatedEconomyClassNoOfSeats" />
                   </td>
                   <td>
                     <button (click)="saveEdit(i)">Save</button>

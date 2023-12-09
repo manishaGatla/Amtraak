@@ -19,7 +19,13 @@ def AddStations(data):
         return "success"
     return "failure"
 def UpdateStations(data):    
-    data_update = db["Stations"].update_one({"_id":ObjectId(data["_id"])},{"$set":{"stationName":data.get('stationName'),"location":data.get('location')}})
+    data_update = db["Stations"].update_one({"_id":ObjectId(data["_id"])},{"$set":
+                                                                           
+                                                                           {"stationName":data.get('stationName'),
+                                                                            "location":data.get('location'),
+                                                                            "phoneNumber": data.get('phoneNumber'),
+                                                                            "city": data.get('city'),
+                                                                            "state": data.get('state')}})
     if(data_update):
         return "success"
     return "failure"

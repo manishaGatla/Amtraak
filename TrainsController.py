@@ -19,7 +19,15 @@ def AddTrains(data):
         return "success"
     return "failure"
 def UpdateTrains(data):   
-    data_update = db["Trains"].update_one({"_id":ObjectId(data["_id"])},{"$set":{"name":data.get('name'),"startStation":data.get('startStation'),"destinationStation":data.get('destinationStation')}})
+    data_update = db["Trains"].update_one(
+        {"_id":ObjectId(data["_id"])},{"$set":
+                                       {"platformNumber": data.get('platformNumber'),
+                                           "trainName":data.get('trainName'),
+                                        "trainNumber":data.get('trainNumber'),
+                                        "businessClassNoOfSeats":data.get('businessClassNoOfSeats'),
+                                        "firstClassNoOfSeats":data.get('firstClassNoOfSeats'),
+                                        "economyClassNoOfSeats":data.get('economyClassNoOfSeats')
+                                      }})
     if(data_update):
         return "success"
     return "failure"
@@ -27,12 +35,9 @@ def UpdateTrains(data):
 def SearchTrains(data):
     
     query = {}
-    if(data.get('name') is not None and data.get('name')!=''):
-        query["name"]= data.get('name')
-    if(data.get('startStation') is not None and data.get('startStation')!=''):
-        query["startStation"]= data.get('startStation')
-    if(data.get('destinationStation') is not None and data.get('destinationStation')!=''):
-        query["destinationStation"]= data.get('destinationStation')
+    if(data.get('trainName') is not None and data.get('trainName')!=''):
+        query["trainName"]= data.get('trainName')
+   
     print(data)
     print(query)
     trainDetails = list(db["Trains"].find(query))

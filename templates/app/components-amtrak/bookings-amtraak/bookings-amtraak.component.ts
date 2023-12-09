@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { GetServiceService } from 'templates/app/services/get-service.service';
 import { InsertServiceService } from 'templates/app/services/insert-service.service';
 import { UpdateServiceService } from 'templates/app/services/update-service.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-bookings-amtraak',
@@ -11,9 +12,7 @@ import { UpdateServiceService } from 'templates/app/services/update-service.serv
 })
 export class BookingsAmtraakComponent implements OnInit {
   searchParams: any ={
-    trainName: null,
-    destinationStation: null,
-    startStation: null
+    trainName: null
   };
   trainName: string = '';
   fromStation: string = '';
@@ -49,13 +48,35 @@ export class BookingsAmtraakComponent implements OnInit {
   selectedDate: any = null;
   errorMsg: boolean = false;
   bookings: any = [];
+  trains: any = [];
 
-  constructor(public router: Router,public getService: GetServiceService, public insertService: InsertServiceService , public updateService: UpdateServiceService) {}
+  constructor(public router: Router,private datePipe: DatePipe,public getService: GetServiceService, public insertService: InsertServiceService , public updateService: UpdateServiceService) {}
 
   ngOnInit() {
+    this.getTrains();
    this.getStations();
     
   }
+
+  getTrains(){
+    this.getService.getTrains().subscribe((res)=>{
+      if(res){
+        this.trains = res;
+      }
+    })
+  }
+
+  convertTo12HourFormat(originalTime: string): string {
+    const parsedTime = originalTime.split(':');
+    const hours = parseInt(parsedTime[0], 10);
+    const minutes = parseInt(parsedTime[1], 10);
+    const time = new Date();
+    time.setHours(hours);
+    time.setMinutes(minutes);
+
+    return this.datePipe.transform(time, 'h:mm a') || '';
+  }
+  
 
 
   onReserveClick(schedule: any){
@@ -74,7 +95,19 @@ export class BookingsAmtraakComponent implements OnInit {
     //   this.searchResults = res;
     // })
     this.getService.getSchedulesWithSearch(this.searchParams).subscribe((res)=>{
-      this.searchResults = res;
+      this.searchResults = res;;
+      this.searchResults.sort((a: any, b:any) => {
+        const timeA = a.startTime.split(':').map(Number);
+        const timeB = b.startTime.split(':').map(Number);
+      
+        // Compare the hours
+        if (timeA[0] !== timeB[0]) {
+          return timeA[0] - timeB[0];
+        }
+      
+        // If hours are the same, compare the minutes
+        return timeA[1] - timeB[1];
+      });
     })
   }
 
@@ -190,7 +223,7 @@ validateCardNumber(event: Event) {
     type: this.selectedClass,
     date: this.selectedDate,
     userId: this.getService.user._id,
-    userName: this.getService.user.name
+    userName: this.getService.user.firstName +  " " + this.getService.user.firstName
     
   }
  }
@@ -209,7 +242,7 @@ validateCardNumber(event: Event) {
   this.seatsArray.forEach((seat)=>{
     tickets.push({
       passengerName: seat.name,
-      age: seat.age,
+      dob: seat.dob,
       gender: seat.gender,
       contact: seat.contact,
       trainName: this.selectedSchedule.trainName,
@@ -228,24 +261,33 @@ validateCardNumber(event: Event) {
  }
 
  showTable(){
+  var train = this.trains.find((train: any)=> train.trainName == this.selectedSchedule.trainName);
+
   let totalSeats = 0;
   let totalFirstClassSeats = 0;
+  let totalEconomySeats = 0;
   this.bookings.forEach((tr : any)=>{
     if(tr.type == 'Business Class')totalSeats += tr.noOfSeatsSelected;
     if(tr.type == 'First Class')totalFirstClassSeats += tr.noOfSeatsSelected;
+    if(tr.type == 'Economy Class')totalEconomySeats += tr.noOfSeatsSelected;
   });
-  this.showNoAvalibilityOfSeats= Number(totalFirstClassSeats) + Number(this.numOfSeats) > 30 || Number(totalSeats) > 50;
+  this.showNoAvalibilityOfSeats= Number(totalFirstClassSeats) + Number(this.numOfSeats) > train.firstClassNoOfSeats
+   || Number(totalSeats) + Number(this.numOfSeats) > train.businessClassNoOfSeats 
+   || Number(totalEconomySeats) + Number(this.numOfSeats) > train.economyClassNoOfSeats;
   if(!this.showNoAvalibilityOfSeats){
     this.seatsArray = [];
     for (let i = 1; i <= this.numOfSeats; i++) {
       this.seatsArray.push({
         passengerNumber: i,
         name: '',
-        age: null,
+        dob: null,
         gender: '',
-        // Add other passenger details properties
+      
       });
     }
+  }
+  else{
+    this.selectedDate = null;
   }
 
   

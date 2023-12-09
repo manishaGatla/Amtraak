@@ -21,6 +21,9 @@ export class StationsAmtraakComponent  implements OnInit{
   ];
   stationName: any = null;
   stationLocation: any = null;
+  phoneNumber: any = null;
+  city: any = null;
+  state: any = null;
   showStationForm: boolean = false;
 
   constructor(private router: Router,public getService: GetServiceService, public insertService: InsertServiceService , public updateService: UpdateServiceService) {}
@@ -41,12 +44,18 @@ export class StationsAmtraakComponent  implements OnInit{
     station.editable = !station.editable;
     station.updatedName =     station.stationName;
     station.updatedLocation = station.location;
+    station.updatedPhoneNum = station.phoneNumber;
+    station.updatedState = station.state;
+    station.updatedCity = station.city;
   }
 
   OnBackClicked(){
     this.showStationForm = false;
     this.stationName = null;
     this.stationLocation = null;
+    this.state = null;
+    this.city = null;
+    this.phoneNumber = null;
   }
 
   getStations(){
@@ -56,6 +65,9 @@ export class StationsAmtraakComponent  implements OnInit{
         this.stations.forEach((c: any)=>{
           c.updatedName = c.stationName;
           c.updatedLocation = c.location;
+          c.updatedPhoneNum = c.phoneNumber;
+          c.updatedState = c.state;
+          c.updatedCity = c.city;
           c.editable = false;
         })
       }
@@ -66,7 +78,10 @@ export class StationsAmtraakComponent  implements OnInit{
   addStation(){
     var body = {
       stationName : this.stationName,
-      location: this.stationLocation
+      location: this.stationLocation,
+      phoneNumber: this.phoneNumber,
+      state: this.state,
+      city : this.city
     }
     this.insertService.addStation(body).subscribe((res)=>{
       if(res){
@@ -83,7 +98,10 @@ export class StationsAmtraakComponent  implements OnInit{
     var body = {
       _id: station._id,
       stationName : station.updatedName,
-      location: station.updatedLocation
+      location: station.updatedLocation,
+      phoneNumber: station.updatedPhoneNum,
+      state: station.updatedState,
+      city : station.updatedCity
     }
     this.updateService.updateStation(body).subscribe((res)=>{
       if(res){

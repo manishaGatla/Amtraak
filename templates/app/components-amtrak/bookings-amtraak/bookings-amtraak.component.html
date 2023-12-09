@@ -1,14 +1,6 @@
 <section class="search-trains" *ngIf="!showPaymentDetails && !showReserveFields">
   <section>
     <div class="margins"><input type="text" placeholder="Enter Train Name" [(ngModel)]="searchParams.trainName"></div>
-    <div class="margins"><select [(ngModel)]="searchParams.startStation">
-        <option value="">Select From Station</option>
-        <option *ngFor="let station of stations" [value]="station.stationName">{{ station.stationName }}</option>
-      </select></div>
-    <div class="margins"><select [(ngModel)]="searchParams.destinationStation">
-        <option value="">Select To Station</option>
-        <option *ngFor="let station of stations" [value]="station.stationName">{{ station.stationName }}</option>
-      </select></div>
     <button type="submit" (click)="searchTrains()">Search</button>
   </section>
 
@@ -21,7 +13,6 @@
           <th>Start Day of Week</th>
           <th>Start Time</th>
           <th>Destination Station</th>
-          <th>Estimated Destination Day of Week</th>
           <th>Estiamted Destination Time</th>
           <th>Stations</th>
           <th>Actions</th>
@@ -32,14 +23,13 @@
           <td>{{ schedule.trainName }}</td>
           <td>{{schedule.startStation}}</td>
           <td>{{ schedule.startDay }}</td>
-          <td>{{ schedule.startTime }}</td>
+          <td>{{ convertTo12HourFormat(schedule.startTime) }}</td>
           <td>{{schedule.destinationStation}}</td>
-          <td>{{ schedule.endDay }}</td>
-          <td>{{ schedule.endTime }}</td>
+          <td>{{ convertTo12HourFormat(schedule.endTime) }}</td>
           <td>
             <ul>
               <li *ngFor="let station of schedule.stations; let i = index">
-                {{ station.sequence }} - {{ station.stationName }} - Estimated Arrival Time: {{ station.arrivalTime }}
+                {{ station.stationName }} - Estimated Arrival Time: {{ convertTo12HourFormat(station.arrivalTime) }}
               </li>
             </ul>
           </td>
@@ -62,6 +52,7 @@
   <select name="class" [(ngModel)]="selectedClass">
     <option value="First Class">First Class</option>
     <option value="Business Class">Business Class</option>
+    <option value ="Economy Class">Economy Class</option>
 
   </select></div>
 
@@ -108,7 +99,7 @@
       <tr>
         <th>Passenger Number</th>
         <th>Name</th>
-        <th>Age</th>
+        <th>Date of Birth</th>
         <th>Gender</th>
       </tr>
     </thead>
@@ -116,7 +107,7 @@
       <tr *ngFor="let seat of seatsArray; let i = index">
         <td>{{ i + 1 }}</td>
         <td><input type="text" name="name" [(ngModel)]="seat.name"></td>
-        <td><input type="number" name="age" [(ngModel)]="seat.age"></td>
+        <td><input type="date" name="dob" [(ngModel)]="seat.dob"></td>
         <td>
           <select name="gender" [(ngModel)]="seat.gender">
             <option value="Male">Male</option>
