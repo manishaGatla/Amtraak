@@ -1,5 +1,7 @@
 # Amtraak
 
+Amtrak application entailed the development of a software application that leverages Angular for the frontend, Python for the backend, and MongoDB as the database. This application emulates the core functionalities and features found in Amtrak's official mobile or web platforms. The designed application facilitates users in planning, booking, and managing their rail travels in the application.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.7.
 
 ## Development server
